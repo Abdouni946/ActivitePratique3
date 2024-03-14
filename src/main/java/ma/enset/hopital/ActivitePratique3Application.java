@@ -24,6 +24,5 @@ public class ActivitePratique3Application implements CommandLineRunner {
         patientRepository.save(new patient(null,"zakariae","abdouni",new Date(),false,15));
         patientRepository.save(new patient(null,"mohammed","ahram",new Date(),true,10));
         patientRepository.save(new patient(null,"zineb","ahlam",new Date(),true,19));
-
     }
 }
