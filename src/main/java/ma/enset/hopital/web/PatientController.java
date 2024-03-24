@@ -8,6 +8,7 @@ import ma.enset.hopital.entities.patient;
 import ma.enset.hopital.repository.PatientRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -40,4 +41,15 @@ public class PatientController {
         return "redirect:/index";
     }
 
+    @GetMapping("/formPatient")
+    public String formPatient(Model model){
+        model.addAttribute("patient", new patient());
+        return "formPatient";
+    }
+
+    @PostMapping("/save")
+    public String save(Model model,patient Patient){
+        patientRepository.save(Patient);
+        return "formPatient";
+    }
 }
