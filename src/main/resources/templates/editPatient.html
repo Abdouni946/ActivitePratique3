@@ -8,10 +8,13 @@
 </head>
 <body>
 <div layout:fragment="content1">
-    <form method="post" th:action="@{save}" class="container pt-5">
+    <form method="post" th:action="@{save(page=${page},keyword=${keyword})}" class="container pt-5">
         <div class="form-group py-1">
-            <label >Id</label>
-            <input type="text" class="form-control " id="id" name="nom" th:value="${patient.id}" required>
+            <div class="text-uppercase text-danger text-xl-center ">
+                <label >Id</label>
+                <label th:text="${patient.id}"></label>
+            </div>
+            <input type="hidden" class="form-control" name="id" th:value="${patient.id}" required>
         </div>
         <div class="form-group py-1">
             <label for="nom">Nom</label>
