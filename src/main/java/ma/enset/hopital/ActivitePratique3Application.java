@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ma.enset.hopital.repository.PatientRepository;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
 
@@ -19,10 +20,19 @@ public class ActivitePratique3Application implements CommandLineRunner {
         SpringApplication.run(ActivitePratique3Application.class, args);
     }
 
+    @Bean
+    CommandLineRunner commandLineRunner(PatientRepository patientRepository){
+        return args -> {
+            patientRepository.save(new patient(null,"zakariae","abdouni",new Date(),false,150));
+            patientRepository.save(new patient(null,"mohammed","ahram",new Date(),true,100));
+            patientRepository.save(new patient(null,"zineb","ahlam",new Date(),true,190));
+        };
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        patientRepository.save(new patient(null,"zakariae","abdouni",new Date(),false,15));
-        patientRepository.save(new patient(null,"mohammed","ahram",new Date(),true,10));
-        patientRepository.save(new patient(null,"zineb","ahlam",new Date(),true,19));
+        patientRepository.findAll().forEach(p -> {
+            System.out.println(p.getNom());
+        });
     }
 }

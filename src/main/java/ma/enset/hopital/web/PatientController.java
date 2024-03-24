@@ -1,5 +1,7 @@
 package ma.enset.hopital.web;
 
+import jakarta.validation.Valid;
+import lombok.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import lombok.AllArgsConstructor;
 import ma.enset.hopital.entities.patient;
 import ma.enset.hopital.repository.PatientRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,8 +51,18 @@ public class PatientController {
     }
 
     @PostMapping("/save")
-    public String save(Model model,patient Patient){
+    public String save(Model model, @Valid patient Patient, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "formPatient";
         patientRepository.save(Patient);
-        return "formPatient";
+            return "redirect:/index";
+    }
+
+    @GetMapping("/editPatient")
+    public String editPatient(Model model, Long id){
+       patient Patient = patientRepository.findById(id).orElse(null);
+       if(Patient==null) throw new RuntimeException("Patient not found");
+       model.addAttribute("patient", Patient);
+       return "editPatient";
     }
 }

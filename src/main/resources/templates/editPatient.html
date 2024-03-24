@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Patient</title>
+</head>
+<body>
+<div layout:fragment="content1">
+    <form method="post" th:action="@{save}" class="container pt-5">
+        <div class="form-group py-1">
+            <label >Id</label>
+            <input type="text" class="form-control " id="id" name="nom" th:value="${patient.id}" required>
+        </div>
+        <div class="form-group py-1">
+            <label for="nom">Nom</label>
+            <input type="text" class="form-control " id="nom" name="nom" th:value="${patient.nom}" required>
+            <span class="text-danger" th:errors="${patient.nom}"></span>
+        </div>
+        <div class="form-group py-1">
+            <label for="prenom">Prenom</label>
+            <input type="text" class="form-control" id="prenom" name="prenom" th:value="${patient.prenom}" required>
+            <span th:errors="${patient.prenom}"></span>
+        </div>
+        <div class="form-group py-1">
+            <label for="dateNaissance">Date de naissance</label>
+            <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" th:value="${patient.dateNaissance}" required>
+            <span  class="text-danger" th:errors="${patient.dateNaissance}"></span>
+        </div>
+        <div class="form-group py-1">
+            <label for="malade">Malade</label>
+            <input type="checkbox"  id="malade" name="malade" th:value="${patient.malade}">
+        </div>
+        <div class="form-group py-1" >
+            <label for="score">score</label>
+            <input type="text" class="form-control" id="score" name="score" th:value="${patient.score}">
+            <span class="text-danger" th:errors="${patient.score}"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+
+</body>
+</html>
