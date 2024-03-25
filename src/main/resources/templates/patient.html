@@ -14,7 +14,7 @@
     <div class="card">
         <div class="card-header"> Lists des patients</div>
         <div class="card-body">
-            <form method="get" th:action="@{index}">
+            <form method="get" th:action="@{/user/index}">
                 <label>keyword</label>
                 <input type="text" name="keyword" th:value="${keyword}"></input>
                 <button type="submit" class="btn btn-outline-info">Chercher</button>
@@ -34,12 +34,15 @@
                     <td th:text="${p.dateNaissance}"></td>
                     <td th:text="${p.malade}"></td>
                     <td th:text="${p.score}"></td>
-                    <td>
-                        <a onclick="javascript:return confirm('etes vous sur ?')"  th:href="@{delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-danger">Delete</a>
+
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <a onclick="javascript:return confirm('etes vous sur ?')"  th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-danger">Delete</a>
                     </td>
-                    <td>
-                        <a  th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-success">Edit</a>
+
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                        <a  th:href="@{/admin/editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-success">Edit</a>
                     </td>
+
                 </tr>
                 </thead>
             </table>
@@ -47,7 +50,7 @@
                 <li  th:each="value,item:${pages}">
                     <a
                        th:text="${item.index}"
-                       th:href="@{/index(page=${item.index},keyword=${keyword})}"
+                       th:href="@{/user/index(page=${item.index},keyword=${keyword})}"
                        th:class="${currentPage==item.index ? 'btn btn-info ms-2 ':'btn btn-outline-info ms-2'}"></a>
                 </li>
             </ul>
